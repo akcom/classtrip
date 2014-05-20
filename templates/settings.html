@@ -1,0 +1,8 @@
+{{ define "title" }} Class Dashboard {{ end }}
+{{define "content" }}
+{{ if .User.Name }}
+	<p>Hello {{.User.Name}}!</p>
+{{ else }}
+	<p>It appears you have not setup your account yet, please go to <a href="/settings/">your settings</a> and do so now</p>
+{{ end }}
+{{ end }}

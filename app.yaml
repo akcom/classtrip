@@ -4,8 +4,16 @@ runtime: go
 api_version: go1
 
 handlers:
+- url: /css
+  static_dir: bootstrap/css
+- url: /fronts
+  static_dir: bootstrap/fonts
+- url: /js
+  static_dir: bootstrap/js
 - url: /.*
   script: _go_app
+  login: required
   
-- url: /bootstrap
-  static_dir: bootstrap
+- url: /admin/.*
+  script: _go_app
+  login: admin
