@@ -1,8 +1,45 @@
 {{ define "title" }} Class Dashboard {{ end }}
 {{define "content" }}
-{{ if .User.Name }}
-	<p>Hello {{.User.Name}}!</p>
-{{ else }}
-	<p>It appears you have not setup your account yet, please go to <a href="/settings/">your settings</a> and do so now</p>
-{{ end }}
+<div class="rows">
+	<div class="col-md-4">
+	<h2>Dashboard</h2>
+	{{ if .User.Name }}
+		<p class="lead">Hi {{FirstName .User.Name}}!</p>
+		<p>You are signed up for 0 events</p>
+		<p>There are 0 open events this month</p>
+	{{ else }}
+		<p class="bg-warning">It appears you have not setup your account yet, please go to <a href="/settings">Settings</a> and do so now.</p>
+	{{ end }}
+	</div>
+	<div class="col-md-8">
+		<h2>Fundraising Efforts</h2>
+		<div style="margin:0px; overflow: auto;width: 100%">
+			<div style="float:left"><strong>$0</strong></div>
+			<div style="float:right"><strong>$10000</strong></div>
+			<div style="min-width:50px">	<div class="progress progress-striped active;">
+				<div class="progress-bar progress-bar-success" role="progress-bar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" style="width: 70%">
+					<span class="sr-only">7000 dollars available</span>
+				</div>
+				<strong>$7000</strong>
+			</div></div>
+			
+		</div>
+			{{/*
+			
+		</div>
+		<strong>$0</strong>
+		<div style="width: 80%; vertical-align: text-top;display: inline-block;">
+		
+		</div>
+		<span style="float:right"><strong>$10000</strong></span>
+		*/}}
+		<p><h2>Leaderboard</h2>
+			<ol>
+				<li>Alex Kravetz</li>
+				<li>Bob Dole</li>
+				<li>Bat Man</li>
+			</ol>
+		</p>
+	</div>
+</div>
 {{ end }}

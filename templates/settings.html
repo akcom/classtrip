@@ -1,8 +1,22 @@
 {{ define "title" }} Class Dashboard {{ end }}
 {{define "content" }}
-{{ if .User.Name }}
-	<p>Hello {{.User.Name}}!</p>
-{{ else }}
-	<p>It appears you have not setup your account yet, please go to <a href="/settings/">your settings</a> and do so now</p>
-{{ end }}
+<div class="row">
+	
+<h2>
+	Settings
+</h2>
+<div class="col-md-8 boxed-elem">
+{{ if .Data }} {{ .Data }} {{ end }}
+<form role="form" action="/settings" method="post">
+	<div class="form-group">
+		<label for="emailAddress">Email address</label>
+		<input type="email" class="form-control" name="emailAddress" id="emailAddress" value="{{ .User.Email }}" disabled>
+	</div>
+	<div class="form-group">
+		<label for="fullName">Full name</label>
+		<input type="text" class="form-control" name="fullName" id="fullName" {{if .User.Name }}value="{{ .User.Name }}" {{ end }} placeholder="John Doe">
+	</div>
+	<button type="submit" class="btn btn-primary">Save</button>
+</form>
+</div>
 {{ end }}

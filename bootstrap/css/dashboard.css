@@ -75,6 +75,20 @@ body {
   margin-top: 0;
 }
 
+.boxed-elem {
+	border-style: solid;
+	border-color: #ddd;
+	border-width: 1px;
+	border-radius: 4px;
+	padding: 10px;
+}
+
+.tbl-num {
+	position:relative;
+	top:0;
+	font-size:70%;
+	float:right;
+}
 
 /*
  * Placeholder dashboard ideas

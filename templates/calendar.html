@@ -1,0 +1,18 @@
+{{ define "title" }} Volunteer Calendar {{ end }}
+{{define "content" }}
+<div class="rows">
+	<div class="col-md-8" id="table">
+		{{ .Data }}
+	</div>
+	<div class="col-md-4" id="controls">
+		<h3>Information</h3>
+		<p class="bg-success">Events in green still have slots available</p>
+		<p class="bg-danger">Events in red are completely full</p>
+		<ul>
+		{{if (IsAdmin .Ctx)}}
+			<li><a href="/addevent">Add new event</a></li>
+		{{end}}
+		</ul>
+	</div>
+</div>
+{{end}}

@@ -4,18 +4,29 @@ import (
 	"net/http"
 	"html/template"
 	"sync"
+	"appengine/user"
+	"strings"
 )
 
 var (
-	templateNames = []string {"accesserror", "index","settings"}
+	templateNames = []string {"accesserror", "index","settings", "calendar"}
 	templates map[string] *template.Template
+	funcTable template.FuncMap = template.FuncMap { "FirstName" : FirstName, "IsAdmin" : IsAdmin }
 	once sync.Once
 )
+
+func IsAdmin(ctx *Context) bool {
+	return user.IsAdmin(ctx.c)
+}
+
+func FirstName(str string) string {
+	return strings.Split(str, " ")[0]
+}
 
 func initTemplates() {
 	templates = make(map[string]*template.Template)
 	for _, k := range(templateNames) {
-		t := template.New("*")
+		t := template.New("*").Funcs(funcTable)
 		t = template.Must(t.ParseFiles("templates/master.html"))
 		t = template.Must(t.ParseFiles("templates/"+k+".html"))
 		templates[k] = t
@@ -32,16 +43,18 @@ func RenderPage(c *Context, w http.ResponseWriter, tmplName string, data interfa
 	x := struct {
 		Data interface{}
 		User  User
-	}{ data, c.u }
+		Ctx *Context
+	}{ data, c.u, c }
 	
 	b := struct {
 		Data interface{}
+		Active string
 		LogoutURL string
-	}{ x, c.logoutURL }
+	}{ x, tmplName, c.logoutURL }
 	
 	//accesserror does not use the master template, so it is rendered separately
 	if tmplName != "accesserror" { 
-		templates["index"].ExecuteTemplate(w, "master", b)
+		templates[tmplName].ExecuteTemplate(w, "master", b)
 	} else {
 		templates[tmplName].ExecuteTemplate(w, "accesserror", b)
 	}
